@@ -5,7 +5,7 @@ import (
 	"github.com/kataras/iris/v12"
 	"github.com/spf13/viper"
 	"time"
-	"tower/config"
+	"tower/library/config"
 	"tower/router/admin"
 	"tower/router/api"
 )
