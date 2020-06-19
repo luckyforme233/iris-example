@@ -27,10 +27,12 @@ func Init(cfg string) error {
 */
 func (c *Config) initConfig() error {
 	if c.Name != "" {
+		viper.AddConfigPath("./conf")
 		viper.SetConfigFile(c.Name)
+
 	} else {
-		viper.AddConfigPath("conf")
-		viper.SetConfigName("config")
+		viper.AddConfigPath("./conf")
+		viper.SetConfigName("app")
 	}
 	viper.SetConfigType("yaml")
 	viper.AutomaticEnv()
