@@ -31,12 +31,15 @@ func InitDB() {
 		dbname, charset, loc,
 		native,
 	)
+	fmt.Println(dabs)
 	// 设置数据库连接数
 
 	db, err := gorm.Open(DbType, dabs)
 	if err != nil {
 		logrus.Fatal("Cannot Connect : " + err.Error())
 	}
+	// 全局禁用表名复数
+	db.SingularTable(true)
 	db.LogMode(debug)
 	db.DB().SetMaxIdleConns(100)
 	db.DB().SetMaxOpenConns(1000)
