@@ -1,4 +1,4 @@
-package adminmods
+package admins
 
 import (
 	"github.com/jinzhu/gorm"

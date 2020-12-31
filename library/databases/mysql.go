@@ -59,7 +59,7 @@ func GetDB() *gorm.DB {
 	return DB
 }
 
-// 好像不需要关闭数据库连接 先写着
+// 关闭数据库连接
 func CloseDB() {
 	if err := DB.Close(); nil != err {
 		logrus.Fatal("Disconnect from database failed: " + err.Error())
