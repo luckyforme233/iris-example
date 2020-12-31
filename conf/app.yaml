@@ -24,7 +24,7 @@ db:
   user: root
   pass: Root_123123
   native: true
-  debug: true
+  debug: 4 # 1 Silent、2Error、3Warn、4Info
   prefix: wk_
 
 redis:

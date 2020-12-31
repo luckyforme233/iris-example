@@ -1,7 +1,7 @@
 package admins
 
 import (
-	"github.com/jinzhu/gorm"
+	"gorm.io/gorm"
 )
 
 type AdminUser struct {
