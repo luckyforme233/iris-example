@@ -61,7 +61,10 @@ func InitDB() {
 			SingularTable: true,   // 使用单数表名，启用该选项，此时，`User` 的表名应该是 `t_user`
 		},
 		//Logger: logger.Default.LogMode(logger.LogLevel(debug)),
-		Logger: newLogger,
+		Logger:                 newLogger,
+		SkipDefaultTransaction: true, // 禁用默认事务
+		PrepareStmt:            true, // 执行任何 SQL 时都创建 prepared statement 并缓存，可以提高后续的调用速度
+
 	})
 	//db, err := gorm.Open(mysql.Open(dabs), &gorm.Config{})
 	if err != nil {

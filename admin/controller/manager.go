@@ -4,12 +4,11 @@ import (
 	"github.com/kataras/iris/v12"
 	"tower/library/apgs"
 	"tower/repositories/repo/adminrepo"
-	"tower/repositories/repository"
 )
 
 type Manager struct {
 	Ctx  iris.Context
-	Repo repository.Repository
+	Repo *adminrepo.AdminUserRepository
 }
 
 func NewManager() *Manager {
@@ -21,7 +20,7 @@ func (g *Manager) GetTest() {
 	where := make(map[string]interface{})
 	where["id"] = 1
 	users1 := g.Repo.Select(where)
-
+	g.Repo.Test()
 	g.Ctx.JSON(apgs.ApiReturn(0, "123123", users1))
 	//users, _ := g.Repo.SelectById("select * from wk_admin_iser where id=?", 1)
 	//fmt.Println(users)
