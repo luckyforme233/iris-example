@@ -13,7 +13,7 @@ Admin 路由
 */
 func InitRouter(app *iris.Application) {
 
-	app.Use(session.AuthSessionMiddle())
+	app.Use(session.NewSessionStore())
 
 	app.PartyFunc("/admin", func(p router.Party) {
 		p.Get("/", admin.Main)
@@ -25,10 +25,10 @@ func InitRouter(app *iris.Application) {
 	//	panic(err)
 	//}
 	// 使用中间件认证
-	//ntc := app.Party("/admin")
+	ntc := app.Party("/admin")
 	{
 		//ntc.Use(middle.AuthAdmin(Egor, easycasbin.NotCheck("/admin/login", "/admin/logout")))
-		mvc.New(app.Party("/user")).Handle(admin.NewManager())
+		mvc.New(ntc.Party("/user")).Handle(admin.NewManager())
 	}
 
 }
