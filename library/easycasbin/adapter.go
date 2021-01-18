@@ -13,6 +13,11 @@ import (
 
 var Enfocer *casbin.SyncedEnforcer
 
+// 获取已经实例化的对象
+func GetEnforcer() *casbin.SyncedEnforcer {
+	return Enfocer
+}
+
 // 初始化权限 数据库适配器
 func InitAdapter() (*casbin.SyncedEnforcer, error) {
 
@@ -30,7 +35,7 @@ func InitAdapter() (*casbin.SyncedEnforcer, error) {
 	// 开启AutoSave机制
 	e.EnableAutoSave(true)
 	_ = e.BuildRoleLinks()
-	enableLog := viper.GetBool("easycasbin.debug")
+	enableLog := viper.GetBool("casbin.debug")
 	e.EnableLog(enableLog)
 	// 10秒重新加载一次权限
 	//e.StartAutoLoadPolicy(10 * time.Second)

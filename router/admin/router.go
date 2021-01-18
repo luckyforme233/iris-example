@@ -5,7 +5,9 @@ import (
 	"github.com/kataras/iris/v12/core/router"
 	"github.com/kataras/iris/v12/mvc"
 	admin "tower/admin/controller"
+	"tower/library/easycasbin"
 	"tower/library/session"
+	"tower/middle"
 )
 
 /**
@@ -20,14 +22,14 @@ func InitRouter(app *iris.Application) {
 	})
 	//
 	// Casbin
-	//Egor, err := easycasbin.InitAdapter()
-	//if err != nil {
-	//	panic(err)
-	//}
+	Egor, err := easycasbin.InitAdapter()
+	if err != nil {
+		panic(err)
+	}
 	// 使用中间件认证
 	ntc := app.Party("/admin")
 	{
-		//ntc.Use(middle.AuthAdmin(Egor, easycasbin.NotCheck("/admin/login", "/admin/logout")))
+		ntc.Use(middle.AuthAdmin(Egor, easycasbin.NotCheck("/admin/login", "/admin/logout")))
 		mvc.New(ntc.Party("/user")).Handle(admin.NewManager())
 	}
 
