@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"github.com/kataras/iris/v12"
+	recover2 "github.com/kataras/iris/v12/middleware/recover"
 	"github.com/spf13/viper"
 	"time"
 	"tower/library/config"
@@ -22,7 +23,8 @@ func main() {
 	app.Logger().SetLevel(viper.GetString("runmode"))
 	// 初始化DB
 	databases.InitDB()
-
+	// 重启
+	app.Use(recover2.New())
 	// API 路由
 	api.InitRouter(app)
 	// admin 路由
