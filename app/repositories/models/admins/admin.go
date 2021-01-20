@@ -123,9 +123,9 @@ func (u *Admin) LoadPolicy(id int) error {
 }
 
 // 获取所有管理员 - 包含角色
-func (a Admin) GetUsersAll() ([]*Admin, error) {
+func (u Admin) GetUsersAll() ([]*Admin, error) {
 	var admin []*Admin
-	err := databases.DB.Model(&a).Preload("Roles").Find(&admin).Error
+	err := databases.DB.Model(&u).Preload("Roles").Find(&admin).Error
 	if err != nil && err != gorm.ErrRecordNotFound {
 		return nil, err
 	}
@@ -134,14 +134,14 @@ func (a Admin) GetUsersAll() ([]*Admin, error) {
 }
 
 // LoadAllPolicy 加载所有的用户策略
-func (a *Admin) LoadAllPolicy() error {
-	admins, err := a.GetUsersAll()
+func (u *Admin) LoadAllPolicy() error {
+	admins, err := u.GetUsersAll()
 	if err != nil {
 		return err
 	}
 	for _, admin := range admins {
 		if len(admin.Roles) != 0 {
-			err = a.LoadPolicy(int(admin.ID))
+			err = u.LoadPolicy(int(admin.ID))
 			if err != nil {
 				return err
 			}

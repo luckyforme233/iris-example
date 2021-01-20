@@ -9,14 +9,17 @@ import (
 
 type AdminUserRepository struct {
 	repository.Repository
+	admins.Admin
 }
 
 func NewAdminUserRepository() *AdminUserRepository {
+	var model = admins.Admin{}
 	newRepository, _ := repository.NewRepository(
-		databases.GetDB().Model(&admins.Admin{}),
+		databases.GetDB().Model(&model),
 	)
 	return &AdminUserRepository{
 		newRepository,
+		model,
 	}
 }
 

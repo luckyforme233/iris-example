@@ -2,28 +2,36 @@ package apgs
 
 import (
 	"fmt"
-	"github.com/kataras/iris/v12"
 	"reflect"
 )
 
-// 通用MAP
-type Map = map[string]interface{}
+type Response struct {
+	Code int
+	Msg  string
+	Data interface{}
+}
+
+type Redirect struct {
+	Code int
+	Msg  string
+	Url  string
+}
 
 // Map 格式返回接口信息
-func ApiReturn(code int, msg string, data interface{}) *iris.Map {
-	return &iris.Map{
-		"code": code,
-		"msg":  msg,
-		"data": data,
+func ApiReturn(code int, msg string, data interface{}) *Response {
+	return &Response{
+		Code: code,
+		Msg:  msg,
+		Data: data,
 	}
 }
 
 // Map 格式返回状态 消息 跳转连接
-func ApiRedirect(code int, msg string, redirectUrl string) *iris.Map {
-	return &iris.Map{
-		"code":    code,
-		"message": msg,
-		"url":     redirectUrl,
+func ApiRedirect(code int, msg string, redirectUrl string) *Redirect {
+	return &Redirect{
+		Code: code,
+		Msg:  msg,
+		Url:  redirectUrl,
 	}
 }
 
