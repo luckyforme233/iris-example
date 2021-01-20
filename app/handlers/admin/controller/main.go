@@ -5,7 +5,10 @@ import (
 )
 
 func Main(ctx iris.Context) {
-	//ctx.JSON(iris.Map{"test" : 1})
 
 	ctx.View("login.html")
+}
+
+func Login(ctx iris.Context) {
+
 }

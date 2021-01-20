@@ -2,9 +2,9 @@ package adminrepo
 
 import (
 	"fmt"
+	"tower/app/repositories/models/admins"
+	"tower/app/repositories/repository"
 	"tower/library/databases"
-	"tower/repositories/models/admins"
-	"tower/repositories/repository"
 )
 
 type AdminUserRepository struct {

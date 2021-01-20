@@ -2,8 +2,8 @@ package admin
 
 import (
 	"github.com/kataras/iris/v12"
+	"tower/app/repositories/repo/adminrepo"
 	"tower/library/apgs"
-	"tower/repositories/repo/adminrepo"
 )
 
 type Manager struct {

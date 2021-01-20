@@ -5,9 +5,9 @@ import (
 	"fmt"
 	"gopkg.in/go-playground/validator.v9"
 	"gorm.io/gorm"
+	"tower/app/repositories/models"
 	"tower/library/databases"
 	"tower/library/easycasbin"
-	"tower/repositories/models"
 )
 
 // 管理员

@@ -2,14 +2,13 @@ package middle
 
 import (
 	"encoding/json"
-	"github.com/casbin/casbin/v2"
 	"github.com/kataras/iris/v12"
 	"github.com/kataras/iris/v12/sessions"
 	"net/http"
 	"strings"
+	"tower/app/repositories/models/admins"
 	"tower/library/easycasbin"
 	"tower/library/session"
-	"tower/repositories/models/admins"
 )
 
 const (
@@ -39,8 +38,12 @@ func AuthSessionMiddle() iris.Handler {
 }
 
 // AuthAdmin 中间件
-func AuthAdmin(enforcer *casbin.SyncedEnforcer, nocheck ...easycasbin.DontCheckFunc) iris.Handler {
-
+func AuthAdmin(nocheck ...easycasbin.DontCheckFunc) iris.Handler {
+	// Casbin
+	enforcer, err := easycasbin.InitAdapter()
+	if err != nil {
+		panic(err)
+	}
 	return func(c iris.Context) {
 		if easycasbin.DontCheck(c, nocheck...) {
 			c.Next()

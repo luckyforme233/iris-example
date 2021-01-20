@@ -2,8 +2,8 @@ package migrate
 
 import (
 	"github.com/sirupsen/logrus"
+	"tower/app/repositories/models/admins"
 	"tower/library/databases"
-	"tower/repositories/models/admins"
 )
 
 var Models = []interface{}{
@@ -15,7 +15,7 @@ var Models = []interface{}{
 func AutoMigrate() {
 	db := databases.GetDB()
 	// 自动创建数据库
-	if migerr := db.Set("gorm:table_options", "ENGINE=Innodb").AutoMigrate(Models...).Error; nil != migerr {
+	if err := db.Set("gorm:table_options", "ENGINE=Innodb").AutoMigrate(Models...).Error; nil != err {
 		logrus.Fatal("auto migrate tables failed: ")
 	}
 }

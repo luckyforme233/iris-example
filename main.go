@@ -6,10 +6,10 @@ import (
 	recover2 "github.com/kataras/iris/v12/middleware/recover"
 	"github.com/spf13/viper"
 	"time"
+	"tower/app/router/admin"
+	"tower/app/router/api"
 	"tower/library/config"
 	"tower/library/databases"
-	"tower/router/admin"
-	"tower/router/api"
 )
 
 func main() {
