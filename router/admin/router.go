@@ -16,9 +16,10 @@ Admin 路由
 func InitRouter(app *iris.Application) {
 
 	app.Use(session.NewSessionStore())
-
+	app.RegisterView(iris.HTML("admin/views", ".html"))
 	app.PartyFunc("/admin", func(p router.Party) {
 		p.Get("/", admin.Main)
+		p.Get("/login", admin.Main)
 	})
 	//
 	// Casbin

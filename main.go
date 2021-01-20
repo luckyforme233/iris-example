@@ -18,6 +18,7 @@ func main() {
 	if erre != nil {
 		panic(erre)
 	}
+
 	app := iris.New()
 	// 设置日志级别
 	app.Logger().SetLevel(viper.GetString("runmode"))

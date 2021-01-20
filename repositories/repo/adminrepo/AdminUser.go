@@ -13,7 +13,7 @@ type AdminUserRepository struct {
 
 func NewAdminUserRepository() *AdminUserRepository {
 	newRepository, _ := repository.NewRepository(
-		databases.GetDB().Model(&admins.AdminUser{}),
+		databases.GetDB().Model(&admins.Admin{}),
 	)
 	return &AdminUserRepository{
 		newRepository,

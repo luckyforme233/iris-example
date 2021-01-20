@@ -36,7 +36,6 @@ func InitDB() {
 		dbname, charset, loc,
 		native,
 	)
-	fmt.Println(dabs)
 
 	newLogger := logger.New(
 		log.New(os.Stdout, "\r\n", log.LstdFlags), // io writer
@@ -112,7 +111,7 @@ func GetDB() *gorm.DB {
 
 // 关闭数据库连接
 func CloseDB() {
-	//if err := DB.Close(); nil != err {
-	//	logrus.Fatal("Disconnect from database failed: " + err.Error())
+	//if err := DB.Di; nil != err {
+	//	log.Fatal("Disconnect from database failed: " + err.Error())
 	//}
 }

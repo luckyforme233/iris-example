@@ -20,7 +20,6 @@ func (g *Manager) GetTest() {
 	where := make(map[string]interface{})
 	where["id"] = 1
 	users1 := g.Repo.Select(where)
-	g.Repo.Test()
 	g.Ctx.JSON(apgs.ApiReturn(0, "123123", users1))
 	//users, _ := g.Repo.SelectById("select * from wk_admin_iser where id=?", 1)
 	//fmt.Println(users)

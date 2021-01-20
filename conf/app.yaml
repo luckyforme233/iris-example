@@ -19,17 +19,17 @@ db:
   type: mysql
   dbname: tower
   loc: Asia%2FShanghai
-  host: 10.168.1.105:3306
+  host: 127.0.0.1:3306
   charset: utf8mb4
   user: root
-  pass: Root_123456#@
+  pass: Root_123123
   native: true
   debug: 4 # 1 Silent、2Error、3Warn、4Info
   prefix: wk_
 
 redis:
-  host: 10.168.1.105
+  host: 127.0.0.1
   port: 6379
-  pass: foobared
+  pass:
 casbin:
   debug: false

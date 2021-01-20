@@ -28,11 +28,13 @@ func (u *Admin) Validate() error {
 	return validate.Struct(u)
 }
 
+// 获取有多少条记录
 func (u Admin) GetByCount(whereSql string, vals []interface{}) (count int64) {
 	databases.DB.Model(u).Where(whereSql, vals).Count(&count)
 	return
 }
 
+// 获取列表，按照 offest 和 limit参数进行分页
 func (u Admin) Lists(fields string, whereSql string, vals []interface{}, offset, limit int) ([]Admin, error) {
 	list := make([]Admin, limit)
 	find := databases.DB.Preload("Roles").Model(&u).Select(fields).Where(whereSql, vals).Offset(offset).Limit(limit).Find(&list)
@@ -42,6 +44,7 @@ func (u Admin) Lists(fields string, whereSql string, vals []interface{}, offset,
 	return list, nil
 }
 
+// 获取单条记录
 func (u Admin) Get(whereSql string, vals []interface{}) (Admin, error) {
 	first := databases.DB.Preload("Roles").Model(&u).Where(whereSql, vals).First(&u)
 	if first.Error != nil {
@@ -50,6 +53,7 @@ func (u Admin) Get(whereSql string, vals []interface{}) (Admin, error) {
 	return u, nil
 }
 
+// 通过主键ID
 func (u Admin) GetById(id int) (Admin, error) {
 	first := databases.DB.Preload("Roles").Model(&u).Where("id = ?", id).First(&u)
 	if first.Error != nil {
@@ -58,6 +62,7 @@ func (u Admin) GetById(id int) (Admin, error) {
 	return u, nil
 }
 
+// 创建记录
 func (u Admin) Create(data map[string]interface{}) (*Admin, error) {
 	var role = make([]Roles, 10)
 	databases.DB.Where("id in (?)", data["role_id"]).Find(&role)
@@ -68,6 +73,7 @@ func (u Admin) Create(data map[string]interface{}) (*Admin, error) {
 	return &u, nil
 }
 
+// 更新操作
 func (u Admin) Update(id int, data map[string]interface{}) error {
 	var role = make([]Roles, 10)
 	if err := databases.DB.Where("id in (?)", data["role_id"]).Find(&role).Error; errors.Is(err, gorm.ErrRecordNotFound) {
@@ -88,6 +94,7 @@ func (u Admin) Update(id int, data map[string]interface{}) error {
 	return nil
 }
 
+// 删除操作
 func (u Admin) Delete(id int) (bool, error) {
 	databases.DB.Where("id = ?", id).Find(&u)
 	databases.DB.Model(&u).Association("Roles").Delete()
@@ -115,6 +122,7 @@ func (u *Admin) LoadPolicy(id int) error {
 	return nil
 }
 
+// 获取所有管理员 - 包含角色
 func (a Admin) GetUsersAll() ([]*Admin, error) {
 	var admin []*Admin
 	err := databases.DB.Model(&a).Preload("Roles").Find(&admin).Error
