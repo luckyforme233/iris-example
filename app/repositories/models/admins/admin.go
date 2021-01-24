@@ -74,25 +74,25 @@ func (u Admin) Create(data map[string]interface{}) (*Admin, error) {
 }
 
 // 更新操作
-func (u Admin) Update(id int, data map[string]interface{}) error {
-	var role = make([]Roles, 10)
-	if err := databases.DB.Where("id in (?)", data["role_id"]).Find(&role).Error; errors.Is(err, gorm.ErrRecordNotFound) {
-		return errors.New("管理员没找到")
-	}
-
-	find := databases.DB.Model(&u).Where("id = ?", id).Find(&u)
-	if find.Error != nil {
-		return find.Error
-	}
-
-	databases.DB.Model(&u).Association("Roles").Replace(role)
-	save := databases.DB.Model(&u).Updates(data)
-
-	if save.Error != nil {
-		return save.Error
-	}
-	return nil
-}
+//func (u Admin) Update(id int, data map[string]interface{}) error {
+//	var role = make([]Roles, 10)
+//	if err := databases.DB.Where("id in (?)", data["role_id"]).Find(&role).Error; errors.Is(err, gorm.ErrRecordNotFound) {
+//		return errors.New("管理员没找到")
+//	}
+//
+//	find := databases.DB.Model(&u).Where("id = ?", id).Find(&u)
+//	if find.Error != nil {
+//		return find.Error
+//	}
+//
+//	databases.DB.Model(&u).Association("Roles").Replace(role)
+//	save := databases.DB.Model(&u).Updates(data)
+//
+//	if save.Error != nil {
+//		return save.Error
+//	}
+//	return nil
+//}
 
 // 删除操作
 func (u Admin) Delete(id int) (bool, error) {

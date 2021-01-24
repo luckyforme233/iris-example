@@ -23,7 +23,7 @@ func InitRouter(app *iris.Application) {
 	// 免登陆的路由
 	app.PartyFunc("/admin", func(p router.Party) {
 		p.Get("/", admin.Main)
-		p.Get("/login", admin.Main)
+		p.Get("/login", admin.Login)
 		p.Post("/login", admin.Login)
 	})
 

@@ -7,6 +7,5 @@ import (
 
 func main() {
 	app := router.InitRouter()
-
 	boot.Run(app)
 }
