@@ -3,28 +3,14 @@ package boot
 import (
 	"fmt"
 	"github.com/kataras/iris/v12"
-	recover2 "github.com/kataras/iris/v12/middleware/recover"
 	"github.com/spf13/viper"
 	"time"
-	"tower/library/config"
-	"tower/library/databases"
 )
 
-func Run() *iris.Application {
-	erre := config.Init("./conf/app.yaml")
-	if erre != nil {
-		panic(erre)
-	}
-
-	app := iris.New()
-	// 设置日志级别
-	app.Logger().SetLevel(viper.GetString("runmode"))
-	// 初始化DB
-	databases.InitDB()
-	// 重启
-	app.Use(recover2.New())
+func Run(app *iris.Application) {
 	// 是否开启TLS
 	tls := viper.GetBool("tls")
+	fmt.Println(tls)
 	var err error
 	if tls == false {
 		err = app.Run(
@@ -40,5 +26,4 @@ func Run() *iris.Application {
 	if err != nil {
 		fmt.Println(err)
 	}
-	return app
 }
