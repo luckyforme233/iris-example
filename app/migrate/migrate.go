@@ -8,10 +8,11 @@ import (
 
 var models = []interface{}{
 	&admins.Admin{},
-	//&admins.Permissions{},
-	//&admins.Roles{},
+	&admins.Permissions{},
+	&admins.Roles{},
 }
 
+// 数据自动填充
 func AutoMigrate() {
 	db := databases.GetDB()
 	// 自动创建数据库

@@ -20,11 +20,8 @@ func GetEnforcer() *casbin.SyncedEnforcer {
 
 // 初始化权限 数据库适配器
 func InitAdapter() (*casbin.SyncedEnforcer, error) {
-
-	if databases.DB == nil {
-		databases.InitDB()
-	}
-	a, err := adapter.NewAdapterByDBUseTableName(databases.DB, viper.GetString("db.prefix"), "")
+	//TODO 因为 前缀问题，此处要写死
+	a, err := adapter.NewAdapterByDBUseTableName(databases.GetDB(), "wk", "casbin_rule")
 	if err != nil {
 		return nil, fmt.Errorf("can not Init: %v", err.Error())
 	}
