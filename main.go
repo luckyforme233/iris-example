@@ -7,7 +7,6 @@ import (
 )
 
 func main() {
-	fmt.Println("hello world")
 	app := router.InitRouter()
 	boot.Run(app)
 }
