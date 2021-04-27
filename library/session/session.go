@@ -25,7 +25,6 @@ func NewSessionStore() iris.Handler {
 	case "redis":
 		store := redisStore()
 		sess.UseDatabase(store)
-		break
 	}
 	return sess.Handler()
 }
