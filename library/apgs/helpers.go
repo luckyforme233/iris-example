@@ -5,19 +5,21 @@ import (
 	"reflect"
 )
 
+// Response 返回数据结构体
 type Response struct {
-	Code int
-	Msg  string
-	Data interface{}
+	Code int         `json:"code"` // 返回码
+	Msg  string      `json:"msg"`  // 返回消息
+	Data interface{} `json:"data"` // 返回数据
 }
 
+// Redirect 重定向Json结构体
 type Redirect struct {
-	Code int
-	Msg  string
-	Url  string
+	Code int    `json:"code"` // 返回码
+	Msg  string `json:"msg"`  //返回消息
+	Url  string `json:"url"`  // 返回数据
 }
 
-// Map 格式返回接口信息
+// ApiReturn 格式返回接口信息
 func ApiReturn(code int, msg string, data interface{}) *Response {
 	return &Response{
 		Code: code,
@@ -26,7 +28,7 @@ func ApiReturn(code int, msg string, data interface{}) *Response {
 	}
 }
 
-// Map 格式返回状态 消息 跳转连接
+// ApiRedirect 格式返回状态 消息 跳转连接
 func ApiRedirect(code int, msg string, redirectUrl string) *Redirect {
 	return &Redirect{
 		Code: code,

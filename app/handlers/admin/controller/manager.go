@@ -16,7 +16,7 @@ func NewManager() *Manager {
 		Repo: adminrepo.NewAdminUserRepository(),
 	}
 }
-func (g *Manager) GetTest() {
+func (g *Manager) getTest() {
 	where := make(map[string]interface{})
 	where["id"] = 1
 	users1 := g.Repo.Select(where)
