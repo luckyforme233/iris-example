@@ -7,7 +7,10 @@ import (
 
 func Main(ctx iris.Context) {
 
-	ctx.View("login.html")
+	err := ctx.View("login.html")
+	if err != nil {
+		return
+	}
 }
 
 func Login(ctx iris.Context) {

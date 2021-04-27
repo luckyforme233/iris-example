@@ -5,6 +5,7 @@ import (
 	"github.com/kataras/iris/v12"
 	"github.com/kataras/iris/v12/sessions"
 	"net/http"
+	"strconv"
 	"strings"
 	"tower/app/repositories/models/admins"
 	"tower/library/easycasbin"
@@ -19,21 +20,20 @@ const (
 func AuthSessionMiddle() iris.Handler {
 
 	return func(c iris.Context) {
-		session := sessions.Get(c)
-		userId, err := session.GetInt64(UserKey)
+		sess := sessions.Get(c)
+		userId, err := sess.GetInt64(UserKey)
 		if userId <= 0 {
 			c.Redirect("/admin/login", 302)
-			c.Problem("还没有登录")
+			_, _ = c.Problem("还没有登录")
 			return
 		}
 		if err != nil {
 			c.Redirect("/admin/login", 302)
-			c.Problem("发生错误")
+			_, _ = c.Problem("发生错误")
 			return
 		}
-		c.SetCookieKV(UserKey, string(userId))
+		c.SetCookieKV(UserKey, strconv.FormatInt(userId, 10))
 		c.Next()
-		return
 	}
 }
 
@@ -69,7 +69,7 @@ func AuthAdmin(nocheck ...easycasbin.DontCheckFunc) iris.Handler {
 			//ginview.HTML(c, http.StatusUnauthorized, "err/401", apgs.NewApiRedirect(200, "登录异常", "/admin/login"))
 			//c.Abort()
 			c.Redirect("/admin/login", 302)
-			c.Problem(nil)
+			_, _ = c.Problem(nil)
 			return
 		}
 		_ = admin.LoadAllPolicy()
@@ -92,7 +92,7 @@ func AuthAdmin(nocheck ...easycasbin.DontCheckFunc) iris.Handler {
 				//ginview.HTML(c, http.StatusForbidden, "err/403", apgs.NewApiReturn(403, err.Error(), nil))
 				//c.Abort()
 				c.Redirect("/admin/login", http.StatusForbidden)
-				c.Problem(nil)
+				_, _ = c.Problem(nil)
 				break
 
 			}
@@ -105,13 +105,11 @@ func AuthAdmin(nocheck ...easycasbin.DontCheckFunc) iris.Handler {
 				//ginview.HTML(c, http.StatusUnauthorized, "err/401", apgs.NewApiRedirect(200, "无权限访问该内容", "/admin/login"))
 				//c.Abort()
 				c.Redirect("/admin/login", http.StatusUnauthorized)
-				c.Problem(nil)
+				_, _ = c.Problem(nil)
 				break
 			}
 		}
 
 		c.Next()
-		return
-
 	}
 }
