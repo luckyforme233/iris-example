@@ -12,9 +12,10 @@ func Run(app *iris.Application) {
 	tls := viper.GetBool("tls")
 	fmt.Println(tls)
 	var err error
-	if tls == false {
+	if !tls {
+		addr := viper.GetString("addr")
 		err = app.Run(
-			iris.Addr(fmt.Sprintf("%s", viper.GetString("addr"))),
+			iris.Addr(addr),
 			iris.WithoutServerError(iris.ErrServerClosed),
 			iris.WithOptimizations,
 			iris.WithTimeFormat(time.RFC3339),

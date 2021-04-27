@@ -7,7 +7,10 @@ import (
 
 func Main(ctx iris.Context) {
 
-	ctx.View("login.html")
+	err := ctx.View("login.html")
+	if err != nil {
+		return
+	}
 }
 
 func Login(ctx iris.Context) {
@@ -16,5 +19,8 @@ func Login(ctx iris.Context) {
 	addr := ctx.RemoteAddr()
 	auth := services.AdminAuth{}
 	login := auth.Login(username, password, addr)
-	ctx.JSON(login)
+	_, err := ctx.JSON(login)
+	if err != nil {
+		return
+	}
 }

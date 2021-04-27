@@ -120,9 +120,12 @@ func (r *Roles) AddRole(data map[string]interface{}) (int, error) {
 func (r *Roles) DeleteRole(id int) error {
 
 	databases.DB.Where("id = ?", id).First(&r)
-	databases.DB.Model(&r).Association("Permissions").Delete()
-	err := databases.DB.Where("id = ?", id).Delete(&r).Error
+	err := databases.DB.Model(&r).Association("Permissions").Delete()
+	if err != nil {
+		return err
+	}
 
+	err = databases.DB.Where("id = ?", id).Delete(&r).Error
 	if err != nil {
 		return err
 	}
@@ -173,13 +176,19 @@ func (a *Roles) LoadPolicy(id int) error {
 	if err != nil {
 		return err
 	}
-	easycasbin.GetEnforcer().DeleteRole(role.Title)
+	_, err = easycasbin.GetEnforcer().DeleteRole(role.Title)
+	if err != nil {
+		return err
+	}
 
 	for _, menu := range role.Permissions {
 		if menu.HttpPath == "" || menu.Method == "" {
 			continue
 		}
-		easycasbin.GetEnforcer().AddPermissionForUser(role.Title, menu.HttpPath, menu.Method)
+		_, err := easycasbin.GetEnforcer().AddPermissionForUser(role.Title, menu.HttpPath, menu.Method)
+		if err != nil {
+			return err
+		}
 	}
 	return nil
 }

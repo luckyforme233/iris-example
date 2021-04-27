@@ -13,12 +13,12 @@ import (
 
 var Enfocer *casbin.SyncedEnforcer
 
-// 获取已经实例化的对象
+// GetEnforcer 获取已经实例化的对象
 func GetEnforcer() *casbin.SyncedEnforcer {
 	return Enfocer
 }
 
-// 初始化权限 数据库适配器
+// InitAdapter 初始化权限 数据库适配器
 func InitAdapter() (*casbin.SyncedEnforcer, error) {
 	//TODO 因为 前缀问题，此处要写死
 	a, err := adapter.NewAdapterByDBUseTableName(databases.GetDB(), "wk", "casbin_rule")
